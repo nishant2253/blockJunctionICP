@@ -1,6 +1,6 @@
 cargo:rustc-check-cfg=cfg(switchable_stack,asm,link_asm)
 OPT_LEVEL = Some(0)
-OUT_DIR = Some(/home/nishant/block-junction2/target/debug/build/psm-df55ce749cfbe9e2/out)
+OUT_DIR = Some(/home/nishant/blockJunctionICP/target/debug/build/psm-df55ce749cfbe9e2/out)
 TARGET = Some(x86_64-unknown-linux-gnu)
 HOST = Some(x86_64-unknown-linux-gnu)
 cargo:rerun-if-env-changed=CC_x86_64-unknown-linux-gnu
@@ -12,7 +12,7 @@ HOST_CC = None
 cargo:rerun-if-env-changed=CC
 CC = None
 cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
-RUSTC_WRAPPER = Some(/home/nishant/.vscode/extensions/rust-lang.rust-analyzer-0.3.2519-linux-x64/server/rust-analyzer)
+RUSTC_WRAPPER = Some(/home/nishant/.vscode/extensions/rust-lang.rust-analyzer-0.3.2533-linux-x64/server/rust-analyzer)
 cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
 CRATE_CC_NO_DEFAULTS = None
 DEBUG = Some(true)
@@ -46,4 +46,4 @@ ARFLAGS_x86_64_unknown_linux_gnu = None
 cargo:rerun-if-env-changed=ARFLAGS_x86_64-unknown-linux-gnu
 ARFLAGS_x86_64-unknown-linux-gnu = None
 cargo:rustc-link-lib=static=psm_s
-cargo:rustc-link-search=native=/home/nishant/block-junction2/target/debug/build/psm-df55ce749cfbe9e2/out
+cargo:rustc-link-search=native=/home/nishant/blockJunctionICP/target/debug/build/psm-df55ce749cfbe9e2/out
