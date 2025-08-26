@@ -272,14 +272,17 @@ dfx deploy swap_executor --network ic
 dfx deploy blockchain_junction_frontend --network ic
 ```
 
-### 3. Initialize Production Data
+### 4. Initialize Production Data
 
 ```bash
 # Initialize liquidity pools
 dfx canister call liquidity_aggregator refresh_liquidity_data --network ic
 
-# Test route finding
-dfx canister call liquidity_aggregator find_best_route '("ETH", "USDC", 1000000000000000000, 3)' --network ic
+# Test route finding (using 1e8 denomination to avoid nat64 overflow)
+dfx canister call liquidity_aggregator find_best_route '("ETH", "USDC", 100000000, 3)' --network ic
+
+# Test swap order creation
+dfx canister call swap_executor create_swap_order '("ICP", "USDC", 100000000, 95000000, variant{ICP}, 3600, 1709123456)' --network ic
 ```
 
 ### 4. Update Frontend Configuration
@@ -312,7 +315,12 @@ cargo test -p liquidity_aggregator
 ```bash
 # Test canister interactions
 dfx canister call liquidity_aggregator get_all_pools
-dfx canister call swap_executor create_swap_order '("ETH", "USDC", 1000000000000000000, 900000000000000000, variant { Ethereum }, 3600, 1)'
+
+# Test swap order creation (using safe nat64 values)
+dfx canister call swap_executor create_swap_order '("ETH", "USDC", 100000000, 95000000, variant { Ethereum }, 3600, 1709123456)'
+
+# Test greet function
+dfx canister call swap_executor greet '("BlockJunction")'
 ```
 
 ### Frontend Tests
@@ -328,6 +336,7 @@ npm test
 - **Idempotency Protection**: Prevents duplicate transactions
 - **Deadline Protection**: Time-based order expiration
 - **Slippage Limits**: Configurable price protection
+- **Memory Safety**: Proper stable structures isolation
 - **Audit Ready**: Comprehensive error handling
 
 ## 🗺️ Roadmap
@@ -337,6 +346,9 @@ npm test
 - [x] ICP execution layer for fee reduction
 - [x] Cross-chain route finding
 - [x] Batch processing system
+- [x] Stable structures memory management
+- [x] Frontend-canister integration
+- [x] Parameter type safety (nat64 overflow protection)
 
 ### Phase 2: Advanced Features 🚧
 - [ ] MEV protection mechanisms

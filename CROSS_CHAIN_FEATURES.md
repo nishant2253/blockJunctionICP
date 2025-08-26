@@ -106,6 +106,36 @@ The **Fee Comparison Widget** displays:
 
 ## 🔒 Technical Implementation
 
+### Memory Management & Stability
+
+**Stable Structures Architecture**:
+```rust
+// Proper memory isolation using MemoryManager
+type Memory = VirtualMemory<DefaultMemoryImpl>;
+type OrderStorage = StableBTreeMap<u64, SwapOrder, Memory>;
+
+const ORDERS_MEMORY_ID: MemoryId = MemoryId::new(0);
+const BATCHES_MEMORY_ID: MemoryId = MemoryId::new(1);
+const IDEMPOTENCY_MEMORY_ID: MemoryId = MemoryId::new(2);
+
+thread_local! {
+    static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> = RefCell::new(
+        MemoryManager::init(DefaultMemoryImpl::default())
+    );
+    
+    static ORDERS: RefCell<OrderStorage> = RefCell::new(
+        StableBTreeMap::init(
+            MEMORY_MANAGER.with(|m| m.borrow().get(ORDERS_MEMORY_ID))
+        )
+    );
+}
+```
+
+**Key Benefits**:
+- **Memory Isolation**: Prevents allocation conflicts
+- **Upgrade Safety**: Data persists through canister upgrades
+- **Scalability**: Supports large-scale storage requirements
+
 ### Inter-Canister Communication
 
 ```rust
@@ -116,6 +146,25 @@ let result: Result<(u64,), _> = ic_cdk::call(
     "create_swap_order",
     (input_token, output_token, amount, min_output, chain, deadline, nonce)
 ).await;
+```
+
+### Frontend-Canister Type Safety
+
+**Parameter Handling**:
+```javascript
+// Safe nat64 conversion (avoiding overflow)
+const amountNat = Math.floor(parseFloat(amount) * 1e8); // 8 decimals max
+
+// Proper ExecutionChain variant mapping
+const chainMap = {
+  'Internet Computer': 'ICP',
+  'Ethereum': 'Ethereum',
+  'Bitcoin': 'Bitcoin'
+};
+const targetChain = chainMap[selectedChain] || 'ICP';
+
+// Correct variant structure
+const chainVariant = { [targetChain]: null };
 ```
 
 ### Chain-Key Cryptography Integration
