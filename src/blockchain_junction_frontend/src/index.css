@@ -461,3 +461,31 @@ code {
 .browser-warning {
   display: none;
 }
+
+/* Navigation Button Overrides */
+.nav-button {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  text-decoration: none;
+}
+
+.nav-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.nav-button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}

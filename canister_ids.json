@@ -1,8 +1,19 @@
 {
   "blockchain_junction_backend": {
+    "local": "ucwa4-rx777-77774-qaada-cai",
     "ic": "2iql3-oiaaa-aaaab-qacja-cai"
   },
   "blockchain_junction_frontend": {
+    "local": "u6s2n-gx777-77774-qaaba-cai",
     "ic": "6ldcj-gyaaa-aaaab-qacsa-cai"
+  },
+  "internet_identity": {
+    "local": "uzt4z-lp777-77774-qaabq-cai"
+  },
+  "liquidity_aggregator": {
+    "local": "umunu-kh777-77774-qaaca-cai"
+  },
+  "swap_executor": {
+    "local": "ulvla-h7777-77774-qaacq-cai"
   }
 }

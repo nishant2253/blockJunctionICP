@@ -1,0 +1,67 @@
+type SupportedChain = variant {
+  ICP;
+  Ethereum;
+  Bitcoin;
+  Solana;
+  Polygon;
+  Arbitrum;
+  Optimism;
+};
+
+type TokenPair = record {
+  token_a: text;
+  token_b: text;
+  chain: SupportedChain;
+};
+
+type LiquidityPool = record {
+  pair: TokenPair;
+  dex_name: text;
+  reserve_a: nat64;
+  reserve_b: nat64;
+  fee_rate: nat32;
+  last_updated: nat64;
+  pool_address: text;
+};
+
+type SwapHop = record {
+  pool: LiquidityPool;
+  input_amount: nat64;
+  output_amount: nat64;
+};
+
+type SwapRoute = record {
+  input_token: text;
+  output_token: text;
+  input_amount: nat64;
+  expected_output: nat64;
+  price_impact: nat32;
+  total_fee: nat64;
+  hops: vec SwapHop;
+  estimated_gas: nat64;
+};
+
+type CrossChainQuote = record {
+  route: SwapRoute;
+  bridge_fee: nat64;
+  execution_fee_icp: nat64;
+  execution_fee_native: nat64;
+  total_time_estimate: nat64;
+  confidence_score: nat8;
+};
+
+type Result = variant { Ok: text; Err: text };
+type Result_1 = variant { Ok: CrossChainQuote; Err: text };
+type Result_2 = variant { Ok: record { nat64; nat64 }; Err: text };
+type Result_3 = variant { Ok: record { nat64; nat64; nat64 }; Err: text };
+
+service : {
+  compare_execution_costs: (text, text, nat64) -> (Result_3) query;
+  find_best_route: (text, text, nat64, nat8) -> (Result_1) query;
+  get_aggregated_liquidity: (text, text) -> (Result_2) query;
+  get_all_pools: () -> (vec LiquidityPool) query;
+  get_pools_for_pair: (text, text) -> (vec LiquidityPool) query;
+  greet: (text) -> (text) query;
+  refresh_liquidity_data: () -> (Result);
+  update_pool_data: (text, nat64, nat64) -> (Result);
+}

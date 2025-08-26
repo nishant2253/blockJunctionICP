@@ -4,6 +4,10 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    global: 'globalThis',
+    'process.env': {},
+  },
   server: {
     port: 3000,
     proxy: {
@@ -16,6 +20,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
+      'declarations': resolve(__dirname, '../../declarations'),
     },
   },
   optimizeDeps: {

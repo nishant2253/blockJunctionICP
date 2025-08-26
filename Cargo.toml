@@ -1,5 +1,7 @@
 [workspace]
 members = [
-    "src/blockchain_junction_backend"
+    "src/blockchain_junction_backend",
+    "src/liquidity_aggregator",
+    "src/swap_executor"
 ]
 resolver = "2"

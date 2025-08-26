@@ -5,13 +5,19 @@
       "package": "blockchain_junction_backend",
       "type": "rust"
     },
+    "liquidity_aggregator": {
+      "candid": "src/liquidity_aggregator/liquidity_aggregator.did",
+      "package": "liquidity_aggregator",
+      "type": "rust"
+    },
+    "swap_executor": {
+      "candid": "src/swap_executor/swap_executor.did",
+      "package": "swap_executor",
+      "type": "rust"
+    },
     "blockchain_junction_frontend": {
-      "dependencies": [
-        "blockchain_junction_backend"
-      ],
-      "source": [
-        "src/blockchain_junction_frontend/dist"
-      ],
+      "dependencies": ["blockchain_junction_backend"],
+      "source": ["src/blockchain_junction_frontend/dist"],
       "type": "assets",
       "workspace": "blockchain_junction_frontend"
     },
@@ -31,9 +37,7 @@
     "bitcoin": {
       "enabled": true,
       "log_level": "info",
-      "nodes": [
-        "127.0.0.1:18444"
-      ]
+      "nodes": ["127.0.0.1:18444"]
     },
     "build": {
       "args": "",

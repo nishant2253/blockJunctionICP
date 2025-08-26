@@ -1,0 +1,75 @@
+type ExecutionChain = variant {
+  ICP;
+  Ethereum;
+  Bitcoin;
+  Solana;
+  Polygon;
+  Arbitrum;
+  Optimism;
+};
+
+type BatchStatus = variant {
+  Pending;
+  Executing;
+  Completed;
+  Failed;
+};
+
+type SwapOrder = record {
+  id: nat64;
+  user: principal;
+  input_token: text;
+  output_token: text;
+  input_amount: nat64;
+  min_output_amount: nat64;
+  target_chain: ExecutionChain;
+  deadline: nat64;
+  created_at: nat64;
+  nonce: nat64;
+};
+
+type BatchExecution = record {
+  batch_id: nat64;
+  orders: vec SwapOrder;
+  total_gas_saved: nat64;
+  execution_chain: ExecutionChain;
+  status: BatchStatus;
+  created_at: nat64;
+  executed_at: opt nat64;
+  transaction_hash: opt text;
+};
+
+type ExecutionResult = record {
+  order_id: nat64;
+  success: bool;
+  output_amount: opt nat64;
+  gas_used: nat64;
+  error_message: opt text;
+};
+
+type FeeComparison = record {
+  individual_execution_cost: nat64;
+  batched_execution_cost: nat64;
+  icp_execution_cost: nat64;
+  savings_vs_individual: nat64;
+  savings_vs_native: nat64;
+  efficiency_score: nat8;
+};
+
+type Result = variant { Ok: nat64; Err: text };
+type Result_1 = variant { Ok: SwapOrder; Err: text };
+type Result_2 = variant { Ok: BatchExecution; Err: text };
+type Result_3 = variant { Ok: vec ExecutionResult; Err: text };
+
+service : {
+  calculate_fee_comparison: (nat64, ExecutionChain) -> (FeeComparison) query;
+  create_batch_execution: (vec nat64, ExecutionChain) -> (Result);
+  create_swap_order: (text, text, nat64, nat64, ExecutionChain, nat64, nat64) -> (Result);
+  execute_batch: (nat64) -> (Result_3);
+  get_batch: (nat64) -> (Result_2) query;
+  get_optimal_batch_size: (ExecutionChain) -> (nat8) query;
+  get_order: (nat64) -> (Result_1) query;
+  get_pending_orders: () -> (vec SwapOrder) query;
+  get_user_orders: (principal) -> (vec SwapOrder) query;
+  greet: (text) -> (text) query;
+}
