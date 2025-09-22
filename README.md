@@ -23,13 +23,15 @@ BlockJunction transforms the fragmented DeFi landscape by aggregating liquidity 
 **Why**: Fragmented liquidity across chains leads to poor pricing and high slippage.
 
 **How**: Our ICP canister aggregates real-time data from 8+ major DEXes across multiple chains:
+
 - **Ethereum**: Uniswap V3, SushiSwap
-- **Arbitrum**: SushiSwap, Uniswap V3  
+- **Arbitrum**: SushiSwap, Uniswap V3
 - **Polygon**: QuickSwap, SushiSwap
 - **Solana**: Serum, Raydium
 - **ICP**: ICPSwap
 
 **Implementation**:
+
 ```rust
 // Find optimal route across all chains
 let quote = find_best_route("ETH", "USDC", amount, max_hops).await?;
@@ -41,13 +43,14 @@ let quote = find_best_route("ETH", "USDC", amount, max_hops).await?;
 
 **How**: Offload swap routing and execution logic to ICP's efficient execution environment:
 
-| Execution Method | Cost | Savings |
-|-----------------|------|---------|
-| Ethereum L1 | $50-100 | - |
-| Batched Execution | $20-40 | 60% |
+| Execution Method  | Cost       | Savings   |
+| ----------------- | ---------- | --------- |
+| Ethereum L1       | $50-100    | -         |
+| Batched Execution | $20-40     | 60%       |
 | **ICP Execution** | **$0.002** | **99.9%** |
 
 **Implementation**:
+
 - Batch multiple swaps into single ICP execution
 - Use Chain-Key Cryptography for secure cross-chain operations
 - Idempotency protection prevents duplicate transactions
@@ -57,6 +60,7 @@ let quote = find_best_route("ETH", "USDC", amount, max_hops).await?;
 **Why**: Users need the best price across all available liquidity sources.
 
 **How**: Multi-hop routing algorithm considers:
+
 - Price impact across all pools
 - Gas costs on different chains
 - Bridge fees and execution time
@@ -67,6 +71,7 @@ let quote = find_best_route("ETH", "USDC", amount, max_hops).await?;
 **Why**: Users need transparency on potential savings.
 
 **How**: Live comparison widget showing:
+
 - Native chain execution costs
 - Batched execution savings
 - ICP execution benefits
@@ -137,7 +142,7 @@ blockchain-junction/
 ## 📈 Performance Metrics
 
 - **Route Calculation**: <500ms response time
-- **Cross-Chain Coverage**: 6 networks, 8+ DEXes  
+- **Cross-Chain Coverage**: 6 networks, 8+ DEXes
 - **Fee Savings**: 90%+ vs Ethereum L1
 - **Batch Efficiency**: 40-60% additional savings
 - **Uptime**: 99.9% (ICP network reliability)
@@ -154,10 +159,12 @@ blockchain-junction/
 ### Essential APIs (Required for Production)
 
 1. **CoinMarketCap API** - Price data
+
    - Get key: https://coinmarketcap.com/api/
    - Free tier: 10,000 calls/month
 
 2. **CoinGecko API** - Alternative price data
+
    - Get key: https://www.coingecko.com/en/api
    - Free tier: 50 calls/minute
 
@@ -168,10 +175,12 @@ blockchain-junction/
 ### DEX-Specific APIs
 
 4. **The Graph Protocol** - Uniswap data
+
    - Get key: https://thegraph.com/
    - Subgraph endpoints for Uniswap V3
 
 5. **Infura/Alchemy** - Ethereum RPC
+
    - Infura: https://infura.io/
    - Alchemy: https://www.alchemy.com/
 
@@ -265,7 +274,7 @@ dfx ledger balance
 # Deploy liquidity aggregator
 dfx deploy liquidity_aggregator --network ic
 
-# Deploy swap executor  
+# Deploy swap executor
 dfx deploy swap_executor --network ic
 
 # Deploy frontend
@@ -342,6 +351,7 @@ npm test
 ## 🗺️ Roadmap
 
 ### Phase 1: Core Features ✅
+
 - [x] Liquidity aggregation across major chains
 - [x] ICP execution layer for fee reduction
 - [x] Cross-chain route finding
@@ -351,12 +361,14 @@ npm test
 - [x] Parameter type safety (nat64 overflow protection)
 
 ### Phase 2: Advanced Features 🚧
+
 - [ ] MEV protection mechanisms
 - [ ] Limit order functionality
 - [ ] Yield farming optimization
 - [ ] Mobile application
 
 ### Phase 3: Ecosystem Expansion 📋
+
 - [ ] Additional blockchain integrations
 - [ ] DAO governance implementation
 - [ ] Professional trading tools
@@ -397,6 +409,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**BlockJunction**: *Bridging the gap between chains with ICP's power* 🌉
+**BlockJunction**: _Bridging the gap between chains with ICP's power_ 🌉
 
-*Built with ❤️ on the Internet Computer*
+_Built with ❤️ on the Internet Computer_
+
+https://youtu.be/06wfFAQpedQ
+https://youtu.be/G2bJetE7t50
