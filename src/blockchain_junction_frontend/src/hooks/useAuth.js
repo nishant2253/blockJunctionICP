@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import authService from '../services/auth.js';
+import { useState, useEffect, useCallback } from "react";
+import authService from "../services/auth.js";
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -7,54 +7,54 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Handle authentication state changes
+  // Handle auth state changes from events
   const handleAuthStateChange = useCallback((event) => {
-    const { isAuthenticated: authenticated, principal: userPrincipal } = event.detail;
+    const { isAuthenticated: authenticated, principal: userPrincipal } =
+      event.detail;
     setIsAuthenticated(authenticated);
     setPrincipal(userPrincipal);
     setIsLoading(false);
     setError(null);
   }, []);
 
-  useEffect(() => {
-    // Listen for auth state changes
-    window.addEventListener('authStateChanged', handleAuthStateChange);
+  // Wait until authClient is initialized
+  const waitForAuthClient = async () => {
+    while (!authService.authClient) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+  };
 
-    // Initialize auth state
+  // Initialize auth state
+  useEffect(() => {
+    let isMounted = true;
+
     const initAuth = async () => {
       try {
         setIsLoading(true);
-        
-        // Wait for auth service to initialize
-        await new Promise(resolve => {
-          const checkInit = () => {
-            if (authService.authClient) {
-              resolve();
-            } else {
-              setTimeout(checkInit, 100);
-            }
-          };
-          checkInit();
-        });
+        await waitForAuthClient();
 
-        // Check current auth state
+        if (!isMounted) return;
+
         const authenticated = authService.isLoggedIn();
         const userPrincipal = authService.getPrincipalText();
-        
+
         setIsAuthenticated(authenticated);
         setPrincipal(userPrincipal);
       } catch (err) {
-        console.error('Auth initialization error:', err);
-        setError(err.message);
+        console.error("Auth initialization error:", err);
+        if (isMounted) setError(err.message);
       } finally {
-        setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     };
 
+    // Listen for auth state changes
+    window.addEventListener("authStateChanged", handleAuthStateChange);
     initAuth();
 
     return () => {
-      window.removeEventListener('authStateChanged', handleAuthStateChange);
+      isMounted = false;
+      window.removeEventListener("authStateChanged", handleAuthStateChange);
     };
   }, [handleAuthStateChange]);
 
@@ -64,8 +64,9 @@ export const useAuth = () => {
       setError(null);
       await authService.login();
     } catch (err) {
-      console.error('Login error:', err);
+      console.error("Login error:", err);
       setError(err.message);
+    } finally {
       setIsLoading(false);
     }
   }, []);
@@ -76,16 +77,17 @@ export const useAuth = () => {
       setError(null);
       await authService.logout();
     } catch (err) {
-      console.error('Logout error:', err);
+      console.error("Logout error:", err);
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  const getActor = useCallback((actorName) => {
-    return authService.getActor(actorName);
-  }, []);
+  const getActor = useCallback(
+    (actorName) => authService.getActor(actorName),
+    []
+  );
 
   const callCanister = useCallback(async (actorName, methodName, args = []) => {
     try {
