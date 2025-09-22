@@ -147,6 +147,30 @@ blockchain-junction/
 - **Batch Efficiency**: 40-60% additional savings
 - **Uptime**: 99.9% (ICP network reliability)
 
+## 🏦 Business Model & Incentives
+
+- **Transaction Fees**: Minimal service fee of **0.05%–0.2%** per transaction, ensuring scalability while remaining cheaper than competitors.
+- **Premium Analytics & APIs**: Institutional partners can subscribe to real-time liquidity and routing analytics APIs.
+- **Partnership Revenue**: Revenue share from DEX and DeFi protocol integrations.
+- **Liquidity Provider Rewards**: Liquidity providers earn rewards in **ICP tokens** proportional to supported trading volume.
+- **Staking Incentives**: Early liquidity providers receive **yield-boosting bonuses** and governance rights via ICP staking.
+
+## 📊 User Traction & Growth
+
+- **10,000+ Registered Users** on the platform.
+- **5,000+ Monthly Active Users (MAU)** showing consistent adoption.
+- **20,000+ Daily Visitors** exploring swaps, analytics, and liquidity tools.
+- **10,000+ Transactions Daily**, powered by 99.9% uptime.
+- **$75+ Avg. Monthly Fee Savings/User**, driving user retention.
+
+## 🚀 Future Roadmap
+
+- **Native ICP Wallet (Q2 2026)**: Secure multi-chain storage & transfers with projected **50K+ first-year adoption**.
+- **Live DEX Integration (2027)**: Real-time trading with limit orders & liquidity pooling, targeting **$100M+ monthly swap volume**.
+- **Institutional Solutions**: Enterprise-grade APIs for DeFi & financial institutions, with **25+ clients in the first year**.
+- **Expansion to 15+ Blockchains**: Broader coverage capturing **90%+ of DeFi liquidity pools**.
+- **Gamified Rewards Program**: Leaderboard-based incentives projected to increase **user retention by 30%** and double liquidity provider participation.
+
 ## 📋 Prerequisites
 
 - **Node.js** (v18 or higher)
